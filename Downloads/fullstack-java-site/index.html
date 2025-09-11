@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Full Stack Java Developer — 12 Haftalık Eğitim</title>
+  <meta name="description" content="Full Stack Java Developer için 12 haftalık eğlenceli ve etkileyici eğitim planı.">
+  <meta property="og:title" content="Full Stack Java Developer — 12 Haftalık Eğitim">
+  <meta property="og:description" content="Java, OOP, Spring Boot, Hibernate ve Mikroservisler.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/og-image.png">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <div class="brand">
+        <img src="assets/favicon.svg" alt="" width="28" height="28">
+        <span>Full Stack Java</span>
+      </div>
+      <nav>
+        <a href="#program">Program</a>
+        <a href="#projeler">Projeler</a>
+        <a href="#sss">S.S.S.</a>
+        <button id="modeToggle" class="mode-btn" aria-label="Tema değiştir">🌙</button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <h1 data-animate="fade-up"><span class="highlight">12 Haftada</span> Full Stack Java Developer</h1>
+        <p data-animate="fade-up" data-delay="150">Sıfırdan ileri seviyeye; Java temelleri, OOP, Collection/Stream, JDBC, Hibernate, Spring ve Mikroservisler. Hepsi tek bir eğlenceli yolculukta.</p>
+        <div class="cta" data-animate="fade-up" data-delay="300">
+          <a class="btn primary" href="#program">Programa Başla</a>
+          <a class="btn ghost" href="#projeler">Projelere Bak</a>
+        </div>
+        <div class="badges" data-animate="fade-up" data-delay="450">
+          <span class="badge">GitHub Pages Uyumlu</span>
+          <span class="badge">Tamamen Statik</span>
+          <span class="badge">Responsive</span>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orb orb-a"></div>
+        <div class="orb orb-b"></div>
+        <div class="grid"></div>
+        <div class="float-card">
+          <div class="float-title">Haftalık İlerleme</div>
+          <div class="float-progress"><span style="width: 0%" id="progressBar"></span></div>
+          <div class="float-meta"><strong id="completedWeeks">0</strong>/12 hafta</div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint" aria-hidden="true">↓</div>
+  </section>
+
+  <main>
+    <section class="timeline" id="program">
+      <div class="container">
+        <h2 data-animate="fade-up">Eğitim Programı</h2>
+        <p class="sub" data-animate="fade-up" data-delay="100">Her hafta kısa hedefler, minik bir proje ve pratikle güçlendirilmiş içerik.</p>
+        <ol class="weeks">
+          <!-- Weeks will be injected by script.js -->
+        </ol>
+      </div>
+    </section>
+
+    <section class="projects" id="projeler">
+      <div class="container">
+        <h2 data-animate="fade-up">Projeler</h2>
+        <p class="sub" data-animate="fade-up" data-delay="100">Konu başlıklarını gerçek dünyaya bağlayan mini projeler + bitirme projesi.</p>
+        <div class="cards" id="projectCards">
+          <!-- Project cards via JS -->
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-card" data-animate="pop">
+          <h3>Bu planı GitHub Pages'te yayınla</h3>
+          <p>Repo oluştur, dosyaları yükle, Pages'i aç ve herkese açık hale getir. Aşağıda adımlar hazır.</p>
+          <a class="btn primary" href="#deploy">Yayınlama Adımları</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq" id="sss">
+      <div class="container">
+        <h2 data-animate="fade-up">Sık Sorulan Sorular</h2>
+        <details open data-animate="fade-up" data-delay="50">
+          <summary>GitHub Pages'te çalışır mı?</summary>
+          <p>Evet. Site tamamen statik HTML/CSS/JS ile yazıldı. Herhangi bir build süreci yok, direkt çalışır.</p>
+        </details>
+        <details data-animate="fade-up" data-delay="100">
+          <summary>Mobil uyumlu mu?</summary>
+          <p>Evet, responsive tasarım ve dokunma hedefleri optimize edildi.</p>
+        </details>
+        <details data-animate="fade-up" data-delay="150">
+          <summary>Koyu tema var mı?</summary>
+          <p>Var. Sağ üstteki 🌙 düğmesiyle anında tema değiştir.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="deploy" id="deploy">
+      <div class="container">
+        <h2 data-animate="fade-up">GitHub Pages Yayınlama Adımları</h2>
+        <ol class="deploy-steps" data-animate="fade-up" data-delay="100">
+          <li>GitHub’da <strong>new repository</strong> oluştur: örn. <code>fullstack-java-site</code>.</li>
+          <li>Bu klasördeki <code>index.html</code>, <code>styles.css</code>, <code>script.js</code> ve <code>assets/</code> dosyalarını repo'ya yükle.</li>
+          <li>Repo ayarlarından <strong>Settings → Pages</strong> yoluna gir. <strong>Build and deployment</strong> altında <em>Source</em> olarak <strong>Deploy from a branch</strong> seç.</li>
+          <li><strong>Branch</strong>: <code>main</code>, <strong>Folder</strong>: <code>/root</code> seç ve <strong>Save</strong> de.</li>
+          <li>Birkaç saniye sonra siten <code>https://kullaniciadiniz.github.io/fullstack-java-site/</code> adresinde yayında.</li>
+        </ol>
+        <p class="deploy-note">Not: Özel alan adı bağlamak istersen <code>CNAME</code> ekleyebilirsin. Bu site tamamen statik olduğundan ek yapılandırma gerektirmez.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>Hazırlandı: 2025-09-11 21:00</span>
+      <span>— Barış için özel 💚</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
