@@ -62,7 +62,8 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <ThemeProvider value={colorScheme === "light" ? DarkTheme : DefaultTheme}>
+      {/* <ThemeProvider value={colorScheme === "light" ? DarkTheme : DefaultTheme}> */}
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <AuthProvider>
           <RootStack />
         </AuthProvider>
