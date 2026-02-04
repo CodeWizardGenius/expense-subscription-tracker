@@ -22,7 +22,7 @@ const Index = () => {
   return (
 
     <View className='flex-1 items-center justify-center gap-4'>
-      <Text>Logged user's email: {auth.session?.user?.email}</Text>
+      <Text> Second Screen - Logged user's email: {auth.session?.user?.email}</Text>
       <Button title="LogOut" onPress={handleLogout}></Button>
     </View>
   )

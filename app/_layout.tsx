@@ -1,4 +1,3 @@
-import { useColorScheme } from "@/hooks/use-color-scheme";
 import { AuthProvider, useAuth } from "@/src/contexts/AuthContext";
 import {
   DarkTheme,
@@ -6,9 +5,10 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { Stack } from "expo-router";
-import { Provider } from "react-redux";
+import { StatusBar } from "expo-status-bar";
+import { LogBox, useColorScheme } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import "../global.css";
-import { store } from "../store";
 
 // Ignore the known SafeAreaView deprecation warning coming from dependencies
 LogBox.ignoreLogs([
@@ -60,11 +60,11 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <ThemeProvider value={colorScheme === "light" ? DarkTheme : DefaultTheme}>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <AuthProvider>
           <RootStack />
         </AuthProvider>
-        <StatusBar style="dark" />
+        <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
         {/* <StatusBar style="auto" /> */}
       </ThemeProvider>
     </SafeAreaProvider>

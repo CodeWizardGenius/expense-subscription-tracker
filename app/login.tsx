@@ -1,7 +1,8 @@
+import { Text, TextInput, View } from '@/src/components/Themed';
 import { signInWithEmail } from '@/src/features/auth/login';
 import { Link } from 'expo-router';
 import React, { useState } from 'react';
-import { Button, Text, TextInput, View } from 'react-native';
+import { Button } from 'react-native';
 
 const Login = () => {
 
@@ -23,7 +24,7 @@ const Login = () => {
 
       {/* email */}
       <TextInput
-        className='w-80 h-15 border border-gray-300 rounded-md px-2 mb-2'
+        className='w-80 h-15 border rounded-md px-2 mb-2'
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
@@ -31,7 +32,7 @@ const Login = () => {
 
       {/* password */}
       <TextInput
-        className='w-80 h-15 border border-gray-300 rounded-md px-2 mb-2'
+        className='w-80 h-15 border rounded-md px-2 mb-2'
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
@@ -49,7 +50,7 @@ const Login = () => {
         Don't have an account?
         <Link
           href={"../signup"} >
-          <Text className='text-blue-500'>Sign up</Text>
+          <Text className='text-blue-500'> Sign up</Text>
         </Link>
       </Text>
     </View >

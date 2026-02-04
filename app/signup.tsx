@@ -1,7 +1,8 @@
+import { Text, TextInput, View } from '@/src/components/Themed';
 import { signUpWithEmail } from '@/src/features/auth/signup';
 import { Link } from 'expo-router';
 import React, { useState } from 'react';
-import { Button, Text, TextInput, View } from 'react-native';
+import { Button } from 'react-native';
 
 const SignUp = () => {
 
@@ -22,7 +23,7 @@ const SignUp = () => {
 
             {/* email */}
             <TextInput
-                className='w-80 h-15 border border-gray-300 rounded-md px-2 mb-2'
+                className='w-80 h-15 border rounded-md px-2 mb-2'
                 placeholder="Email"
                 value={email}
                 onChangeText={setEmail}
@@ -30,7 +31,7 @@ const SignUp = () => {
 
             {/* password */}
             <TextInput
-                className='w-80 h-15 border border-gray-300 rounded-md px-2 mb-2'
+                className='w-80 h-15 border rounded-md px-2 mb-2'
                 placeholder="Password"
                 value={password}
                 onChangeText={setPassword}
