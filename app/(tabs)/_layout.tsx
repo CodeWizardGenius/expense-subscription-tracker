@@ -20,6 +20,30 @@ export default function TabLayout() {
         headerShown: false,
         tabBarShowLabel: false,
         // tabBarButton: HapticTab,
+
+        tabBarStyle: {
+          position: 'absolute',
+          bottom: 30,
+          left: 20,
+          right: 20,
+          height: 56,
+          borderRadius: 32,
+          borderWidth: 2,
+          borderTopWidth: 2,
+          paddingHorizontal: 10,
+          marginHorizontal: 10,
+          borderColor: "#454949",
+          borderTopColor: "#454949",
+          backgroundColor: '#171717',
+          elevation: 0,
+        },
+        tabBarItemStyle: {
+          justifyContent: 'center',
+          alignItems: 'center',
+          // height: 64,
+          marginVertical: 6,
+        },
+
       }}>
       <Tabs.Screen
         name="index"
@@ -27,7 +51,6 @@ export default function TabLayout() {
           title: 'Home',
           tabBarIcon: ({ color }) => <HomeIcon size={28} color={color} />,
           // tabBarIcon: ({ color }) => <Foundation name="home" size={28} color={color} />,
-
 
         }}
       />
@@ -46,7 +69,7 @@ export default function TabLayout() {
         name="transactions"
         options={{
           title: 'Transactions',
-          tabBarIcon: ({ color }) => <PlusIcon size={28} color={color} />,
+          tabBarIcon: ({ color }) => <PlusIcon size={30} color={color} />,
           // tabBarIcon: ({ color }) => <AntDesign name="plus-circle" size={28} color={color} />,
         }}
       />

@@ -9,6 +9,7 @@ const HomeIcon = ({ size, ...props }: IconProps) => (
     <Svg
         width={size || 21}
         height={size || 23}
+        viewBox="0 0 21 23"
         fill="none"
         {...props}
     >

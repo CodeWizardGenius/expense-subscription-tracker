@@ -9,6 +9,7 @@ const PlusIcon = ({ size, ...props }: IconProps) => (
     <Svg
         width={size || 28}
         height={size || 28}
+        viewBox="0 0 28 28"
         fill="none"
         {...props}
     >

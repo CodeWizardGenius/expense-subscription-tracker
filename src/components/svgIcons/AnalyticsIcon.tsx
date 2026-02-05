@@ -9,6 +9,7 @@ const AnalyticsIcon = ({ size, ...props }: IconProps) => (
     <Svg
         width={size || 28}
         height={size || 28}
+        viewBox="0 0 22 25"
         fill="none"
         {...props}
     >
