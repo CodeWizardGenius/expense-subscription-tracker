@@ -22,51 +22,37 @@ export const unstable_settings = {
 export default function RootLayout() {
   const colorScheme = useColorScheme();
 
-  // Ananymous User
-  const AuthStack = () => {
-    return (
-      <Stack>
-        <Stack.Screen name="login" options={{ headerShown: false }} />
-        <Stack.Screen name="signup" options={{ headerShown: false }} />
-      </Stack>
-    )
-  }
-
-
-  // Logged In User
-  const ProtectedStack = () => {
-    return (
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="modal"
-          options={{ presentation: "modal", title: "Modal" }}
-        />
-      </Stack>
-    )
-  }
-
-  const RootStack = () => {
-    const { auth } = useAuth();
-    if (auth.session) {
-      return (
-        <ProtectedStack />
-      )
-    } else {
-      return <AuthStack />
-    }
-  }
-
-
   return (
     <SafeAreaProvider>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <AuthProvider>
-          <RootStack />
+          <RootNavigator />
         </AuthProvider>
         <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
-        {/* <StatusBar style="auto" /> */}
       </ThemeProvider>
     </SafeAreaProvider>
+  );
+}
+
+function RootNavigator() {
+  const { auth } = useAuth();
+
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      {auth.session ? (
+        <>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen
+            name="modal"
+            options={{ presentation: "modal", title: "Modal" }}
+          />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name="login" />
+          <Stack.Screen name="signup" />
+        </>
+      )}
+    </Stack>
   );
 }
