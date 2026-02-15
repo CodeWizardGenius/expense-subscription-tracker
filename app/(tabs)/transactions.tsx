@@ -4,7 +4,7 @@ import { supabase } from '@/src/lib/supabase';
 import React from 'react';
 import { Button } from 'react-native';
 
-const Index = () => {
+const Transactions = () => {
   const { auth } = useAuth();
 
   if (auth.isLoading) {
@@ -22,7 +22,7 @@ const Index = () => {
   return (
 
     <View className='flex-1 items-center justify-center gap-4'>
-      <Text> Second Screen - Logged user's email: {auth.session?.user?.email}</Text>
+      <Text> transactions ScreeN </Text>
       <Button title="LogOut" onPress={handleLogout}></Button>
     </View>
   )
@@ -33,4 +33,4 @@ const Index = () => {
 
 }
 
-export default Index;
+export default Transactions;
