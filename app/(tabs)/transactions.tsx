@@ -1,5 +1,6 @@
 import { useAuth } from '@/src/contexts/AuthContext';
 import { supabase } from '@/src/lib/supabase';
+import { LinearGradient } from 'expo-linear-gradient';
 import {
   Car, Check, Delete, House, Pencil, ShoppingBag, TrendingDown, TrendingUp, Utensils
 } from 'lucide-react-native';
@@ -136,106 +137,111 @@ const Transactions = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-[#0D1515]" edges={['top', 'left', 'right']}>
-      <ScrollView
-        className="flex-1"
-        contentContainerStyle={{ paddingHorizontal: 32, paddingBottom: 140 }}
-        showsVerticalScrollIndicator={false}
-      >
-        <Text className="text-white text-center text-2xl font-extrabold mt-4 mb-6 tracking-tight">Transactions</Text>
-
-        {/* Amount Display */}
-        <View className="items-center mb-6">
-          <Text className="text-gray-500 text-[10px] font-bold uppercase tracking-[3px] mb-2">TOTAL AMOUNT</Text>
-          <View className="flex-row items-center">
-            <Text className="text-white text-4xl font-semibold">$</Text>
-            <Text className="text-white text-4xl font-semibold ml-1">{amount}</Text>
-          </View>
-        </View>
-
-        {/* Expense / Income Toggle */}
-        <View className="flex-row bg-[#1A2626] p-1.5 rounded-2xl mb-6 border border-gray-800/50">
-          <TypeButton
-            label="Expense"
-            Icon={TrendingDown}
-            active={type === 'expense'}
-            onPress={() => setType('expense')}
-          />
-          <TypeButton
-            label="Income"
-            Icon={TrendingUp}
-            active={type === 'income'}
-            onPress={() => setType('income')}
-          />
-        </View>
-
-        {/* Category Selector */}
-        <View className="flex-row justify-between mb-6">
-          {CATEGORIES.map(cat => (
-            <CategoryButton
-              key={cat.id}
-              item={cat}
-              isSelected={selectedCategory === cat.id}
-              onPress={() => setSelectedCategory(cat.id)}
-            />
-          ))}
-        </View>
-
-        {/* Note Input */}
-        <View className="flex-row items-center bg-[#141C1C]/80 px-4 py-2 rounded-xl border border-gray-800/50 mb-6">
-          <Pencil size={18} color="#444" />
-          <TextInput
-            className="flex-1 ml-3 text-white font-medium"
-            placeholder="Add a note..."
-            placeholderTextColor="#333"
-            value={note}
-            onChangeText={setNote}
-          />
-        </View>
-
-        {/* Custom Numeric Keypad */}
-        <View>
-          {KEYPAD.map((row, rowIndex) => (
-            <View key={rowIndex} className="flex-row justify-around mb-8">
-              {row.map(key => (
-                <TouchableOpacity
-                  key={key}
-                  activeOpacity={0.6}
-                  onPress={() => key === 'delete' ? handleBackspace() : handleNumberPress(key)}
-                  className="w-1/3 items-center justify-center"
-                >
-                  {key === 'delete' ? (
-                    <Delete size={26} color="white" />
-                  ) : (
-                    <Text className="text-white text-3xl font-medium">{key}</Text>
-                  )}
-                </TouchableOpacity>
-              ))}
-            </View>
-          ))}
-        </View>
-
-        {/* Confirm Button */}
-        <TouchableOpacity
-          onPress={handleConfirm}
-          disabled={isLoading}
-          activeOpacity={0.8}
-          className="bg-[#00F0F0] flex-row items-center justify-center py-5 rounded-[32px] mb-6 shadow-lg shadow-[#00FFFF]/20"
+    <LinearGradient
+      colors={['#112426', '#121314']}
+      className="flex-1"
+    >
+      <SafeAreaView className="flex-1" edges={['top', 'left', 'right']}>
+        <ScrollView
+          className="flex-1"
+          contentContainerStyle={{ paddingHorizontal: 32, paddingBottom: 140 }}
+          showsVerticalScrollIndicator={false}
         >
-          {isLoading ? (
-            <ActivityIndicator color="#0D1515" />
-          ) : (
-            <>
-              <Text className="text-[#0D1515] font-black text-lg mr-2 uppercase">Confirm Transaction</Text>
-              <View className="bg-[#0D1515] rounded-full p-0.5">
-                <Check size={16} color="#00F0F0" strokeWidth={4} />
-              </View>
-            </>
-          )}
-        </TouchableOpacity>
+          <Text className="text-white text-center text-2xl font-extrabold mt-4 mb-6 tracking-tight">Transactions</Text>
 
-      </ScrollView>
-    </SafeAreaView>
+          {/* Amount Display */}
+          <View className="items-center mb-6">
+            <Text className="text-gray-500 text-[10px] font-bold uppercase tracking-[3px] mb-2">TOTAL AMOUNT</Text>
+            <View className="flex-row items-center">
+              <Text className="text-white text-4xl font-semibold">$</Text>
+              <Text className="text-white text-4xl font-semibold ml-1">{amount}</Text>
+            </View>
+          </View>
+
+          {/* Expense / Income Toggle */}
+          <View className="flex-row bg-[#1A2626] p-1.5 rounded-2xl mb-6 border border-gray-800/50">
+            <TypeButton
+              label="Expense"
+              Icon={TrendingDown}
+              active={type === 'expense'}
+              onPress={() => setType('expense')}
+            />
+            <TypeButton
+              label="Income"
+              Icon={TrendingUp}
+              active={type === 'income'}
+              onPress={() => setType('income')}
+            />
+          </View>
+
+          {/* Category Selector */}
+          <View className="flex-row justify-between mb-6">
+            {CATEGORIES.map(cat => (
+              <CategoryButton
+                key={cat.id}
+                item={cat}
+                isSelected={selectedCategory === cat.id}
+                onPress={() => setSelectedCategory(cat.id)}
+              />
+            ))}
+          </View>
+
+          {/* Note Input */}
+          <View className="flex-row items-center bg-[#141C1C]/80 px-4 py-2 rounded-xl border border-gray-800/50 mb-6">
+            <Pencil size={18} color="#444" />
+            <TextInput
+              className="flex-1 ml-3 text-white font-medium"
+              placeholder="Add a note..."
+              placeholderTextColor="#333"
+              value={note}
+              onChangeText={setNote}
+            />
+          </View>
+
+          {/* Custom Numeric Keypad */}
+          <View>
+            {KEYPAD.map((row, rowIndex) => (
+              <View key={rowIndex} className="flex-row justify-around mb-8">
+                {row.map(key => (
+                  <TouchableOpacity
+                    key={key}
+                    activeOpacity={0.6}
+                    onPress={() => key === 'delete' ? handleBackspace() : handleNumberPress(key)}
+                    className="w-1/3 items-center justify-center"
+                  >
+                    {key === 'delete' ? (
+                      <Delete size={26} color="white" />
+                    ) : (
+                      <Text className="text-white text-3xl font-medium">{key}</Text>
+                    )}
+                  </TouchableOpacity>
+                ))}
+              </View>
+            ))}
+          </View>
+
+          {/* Confirm Button */}
+          <TouchableOpacity
+            onPress={handleConfirm}
+            disabled={isLoading}
+            activeOpacity={0.8}
+            className="bg-[#00F0F0] flex-row items-center justify-center py-5 rounded-[32px] mb-6 shadow-lg shadow-[#00FFFF]/20"
+          >
+            {isLoading ? (
+              <ActivityIndicator color="#0D1515" />
+            ) : (
+              <>
+                <Text className="text-[#0D1515] font-black text-lg mr-2 uppercase">Confirm Transaction</Text>
+                <View className="bg-[#0D1515] rounded-full p-0.5">
+                  <Check size={16} color="#00F0F0" strokeWidth={4} />
+                </View>
+              </>
+            )}
+          </TouchableOpacity>
+
+        </ScrollView>
+      </SafeAreaView>
+    </LinearGradient>
   );
 };
 
