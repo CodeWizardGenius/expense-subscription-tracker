@@ -15,9 +15,37 @@ import React, { useState } from "react";
 import { ScrollView, Switch, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+const formatMemberSince = (dateStr?: string): string => {
+  if (!dateStr) return "";
+  const date = new Date(dateStr);
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  return `Member since ${months[date.getMonth()]} ${date.getFullYear()}`;
+};
+
 const Profile = () => {
   const { auth } = useAuth();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+
+  const user = auth.session?.user;
+  const userName =
+    user?.user_metadata?.full_name ||
+    user?.user_metadata?.name ||
+    user?.email?.split("@")[0] ||
+    "User";
+  const memberSince = formatMemberSince(user?.created_at);
 
   const handleLogout = () => {
     supabase.auth.signOut();
@@ -56,10 +84,8 @@ const Profile = () => {
             <User size={60} color="#9CA3AF" fill="#9CA3AF" />
           </View>
 
-          <Text className="text-white text-xl font-bold">Ayhan Yılmaz</Text>
-          <Text className="text-gray-500 text-xs mt-1">
-            Member since Oct 2025
-          </Text>
+          <Text className="text-white text-xl font-bold">{userName}</Text>
+          <Text className="text-gray-500 text-xs mt-1">{memberSince}</Text>
         </View>
 
         {/* App Preferences Label */}
