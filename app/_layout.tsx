@@ -6,7 +6,7 @@ import {
 } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { LogBox, useColorScheme } from "react-native";
+import { ActivityIndicator, LogBox, View, useColorScheme } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import "../global.css";
 
@@ -36,6 +36,14 @@ export default function RootLayout() {
 
 function RootNavigator() {
   const { auth } = useAuth();
+
+  if (auth.isLoading) {
+    return (
+      <View style={{ flex: 1, backgroundColor: '#0a1f1f', alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator size="large" color="#00e5ff" />
+      </View>
+    );
+  }
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
