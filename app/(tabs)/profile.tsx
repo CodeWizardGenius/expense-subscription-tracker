@@ -1,5 +1,6 @@
 import { useAuth } from "@/src/contexts/AuthContext";
 import { supabase } from "@/src/lib/supabase";
+import * as WebBrowser from "expo-web-browser";
 import {
   Bell,
   ChevronDown,
@@ -12,7 +13,7 @@ import {
   Wallet,
 } from "lucide-react-native";
 import React, { useState } from "react";
-import { ScrollView, Switch, Text, TouchableOpacity, View } from "react-native";
+import { Linking, ScrollView, Switch, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const formatMemberSince = (dateStr?: string): string => {
@@ -49,6 +50,16 @@ const Profile = () => {
 
   const handleLogout = () => {
     supabase.auth.signOut();
+  };
+
+  const handleOpenPrivacy = async () => {
+    const url = "https://codewizardgenius.github.io/Privacy-Policy---Expense-Tracker-Eng/";
+    try {
+      await WebBrowser.openBrowserAsync(url);
+    } catch (error) {
+      console.warn("WebBrowser açılamadı, Linking ile deneniyor:", error);
+      await Linking.openURL(url);
+    }
   };
 
   if (auth.isLoading) {
@@ -182,6 +193,7 @@ const Profile = () => {
           activeOpacity={0.7}
           className="flex-row items-center rounded-3xl px-4 py-4 mb-10"
           style={{ backgroundColor: "#17282A" }}
+          onPress={handleOpenPrivacy}
         >
           <View
             style={{
