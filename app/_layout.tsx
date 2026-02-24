@@ -4,7 +4,7 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { Redirect, Stack } from "expo-router";
+import { Redirect, Stack, useRouter, useSegments } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { ActivityIndicator, LogBox, View, useColorScheme } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -36,6 +36,12 @@ export default function RootLayout() {
 
 function RootNavigator() {
   const { auth } = useAuth();
+  const segments = useSegments();
+  const router = useRouter();
+
+  const inAuthGroup = segments[0] === "(tabs)";
+  const isLoginPage = segments[0] === "login";
+  const isSignupPage = segments[0] === "signup";
 
   if (auth.isLoading) {
     return (
@@ -45,8 +51,12 @@ function RootNavigator() {
     );
   }
 
-  if (!auth.session) {
+  if (!auth.session && !isLoginPage && !isSignupPage) {
     return <Redirect href="/login" />;
+  }
+
+  if (auth.session && (isLoginPage || isSignupPage)) {
+    return <Redirect href="/(tabs)" />;
   }
 
   return (
