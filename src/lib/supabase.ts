@@ -4,7 +4,7 @@ import { AppState, Platform } from 'react-native'
 import 'react-native-url-polyfill/auto'
 
 const supabaseUrl = 'https://balcdzxxyyenmfndotai.supabase.co'
-const supabaseAnonKey = 'sb_publishable_Ccy4fbXhwdAS0mZ07crFrg_R48tnVNl'
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhbGNkenh4eXllbm1mbmRvdGFpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg5ODkyMTksImV4cCI6MjA4NDU2NTIxOX0.VWE2vrbYCZanv-ITKAsU_iJAVMp6PsSF_TCVy3ovmug'
 
 const ExpoSecureStoreAdapter = {
     getItem: (key: string) => SecureStore.getItem(key),
