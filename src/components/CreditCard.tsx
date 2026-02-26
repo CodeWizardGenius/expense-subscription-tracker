@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { memo } from 'react';
-import { Dimensions, Text, View } from 'react-native';
+import { Dimensions, Text, TouchableOpacity, View } from 'react-native';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 export const CARD_WIDTH = SCREEN_WIDTH * 0.85;
@@ -30,14 +30,19 @@ interface CreditCardProps {
     };
     index: number;
     email?: string;
+    onPress?: () => void;
 }
 
-export const CreditCard = memo(({ item, index, email }: CreditCardProps) => {
+export const CreditCard = memo(({ item, index, email, onPress }: CreditCardProps) => {
     const colors = CARD_GRADIENTS[index % CARD_GRADIENTS.length];
     const holderName = email?.split('@')[0] || 'AYHAN YILMAZ';
 
     return (
-        <View style={{ width: CARD_WIDTH }}>
+        <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={onPress}
+            style={{ width: CARD_WIDTH }}
+        >
             <LinearGradient
                 colors={colors as [string, string, ...string[]]}
                 className="h-60 rounded-[32px] p-8 mx-2 border border-white/10 justify-between shadow-2xl overflow-hidden"
@@ -50,7 +55,7 @@ export const CreditCard = memo(({ item, index, email }: CreditCardProps) => {
                     <CardChip />
                 </View>
 
-                <Text className="text-white text-xl font-medium tracking-[5px] opacity-90 mt-4">••••  ••••  ••••  ••••</Text>
+                <Text className="text-white text-xl font-medium tracking-[5px] opacity-90 mt-4">•••• •••• •••• ••••</Text>
 
                 <View className="flex-row justify-between items-end z-10">
                     <View>
@@ -69,6 +74,6 @@ export const CreditCard = memo(({ item, index, email }: CreditCardProps) => {
                     </View>
                 </View>
             </LinearGradient>
-        </View>
+        </TouchableOpacity>
     );
 });
