@@ -105,33 +105,78 @@ const SubsCards = () => {
     }
   };
 
-  const renderCard = ({ item }: { item: Card }) => (
-    <View
-      style={{ width: CARD_WIDTH }}
-      className="bg-[#0D1A1A] h-60 rounded-2xl p-6 mx-2 border border-white/5 justify-between"
-    >
-      <View className="flex-row justify-between items-start">
-        <Text className="text-white text-2xl font-semibold">{item.card_name}</Text>
-      </View>
+  const renderCard = ({ item, index }: { item: Card; index: number }) => {
+    // Farklı kartlar için çeşitli gradyanlar
+    const gradients = [
+      ['#0f172a', '#1e293b'], // Slate
+      ['#0d1a1a', '#132626'], // Dark Teal
+      ['#1e1b4b', '#312e81'], // Indigo
+      ['#1c1917', '#292524'], // Stone
+    ];
+    const currentGradient = gradients[index % gradients.length];
 
-      <View>
-        {/* <Text className="text-white/60 text-xs  uppercase tracking-tighter">Card Holder</Text> */}
+    return (
+      <View style={{ width: CARD_WIDTH }}>
+        <LinearGradient
+          colors={currentGradient as [string, string, ...string[]]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          className="h-60 rounded-[32px] p-8 mx-2 border border-white/10 relative overflow-hidden shadow-2xl"
+        >
 
-        <View className="flex-row justify-between items-end">
-          <Text className="text-white text-lg font-medium tracking-widest uppercase">
-            {auth.session?.user.email?.split('@')[0] || 'USER'}
-          </Text>
-          <View className="items-end">
-            <Text className="text-white/40 text-[9px] uppercase font-bold">Cutoff / Due</Text>
-            <Text className="text-white text-sm font-black px-3 tracking-tighter">
-              {item.cutoff_day} / {item.due_day}
+
+          {/* Üst Kısım: Kart İsmi ve Çip */}
+          <View className="flex-row justify-between items-start z-10">
+            <View>
+              <Text className="text-white/50 text-[10px] uppercase font-bold tracking-[2px] mb-1">Card Name</Text>
+              <Text className="text-white text-2xl font-black tracking-tight">{item.card_name}</Text>
+            </View>
+
+            {/* Simüle edilmiş altın çip */}
+            <View className="w-12 h-9 bg-yellow-600/20 rounded-lg border border-yellow-600/30 items-center justify-center overflow-hidden">
+              <View className="absolute inset-0 opacity-20">
+                <View className="h-[1px] w-full bg-yellow-400 absolute top-1/3" />
+                <View className="h-[1px] w-full bg-yellow-400 absolute top-2/3" />
+                <View className="w-[1px] h-full bg-yellow-400 absolute left-1/3" />
+                <View className="w-[1px] h-full bg-yellow-400 absolute left-2/3" />
+              </View>
+              <View className="w-6 h-4 bg-yellow-500/10 rounded-sm border border-yellow-500/20" />
+            </View>
+          </View>
+
+          {/* Orta Kısım: Simüle edilmiş Kart Numarası */}
+          <View className="mt-10 z-10">
+            <Text className="text-white text-xl font-medium tracking-[5px] opacity-90">
+              ••••  ••••  ••••  ••••
             </Text>
           </View>
-        </View>
 
+          {/* Alt Kısım: Kart Sahibi ve Tarihler */}
+          <View className="flex-row justify-between items-end mt-auto z-10">
+            <View>
+              <Text className="text-white/40 text-[9px] uppercase font-black tracking-[1px] mb-1">Card Holder</Text>
+              <Text className="text-white text-sm font-bold tracking-[2px] uppercase">
+                {auth.session?.user.email?.split('@')[0] || 'AYHAN YILMAZ'}
+              </Text>
+            </View>
+
+            <View className="items-end">
+              <View className="flex-row gap-4 ">
+                <View className="items-center">
+                  <Text className="text-white/30 text-[8px] uppercase font-bold mb-0.5">Cutoff</Text>
+                  <Text className="text-[#00FFFF] text-xs font-black">{item.cutoff_day}</Text>
+                </View>
+                <View className="items-center">
+                  <Text className="text-white/30 text-[8px] uppercase font-bold mb-0.5">Due</Text>
+                  <Text className="text-[#00FFFF] text-xs font-black">{item.due_day}</Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </LinearGradient>
       </View>
-    </View>
-  );
+    );
+  };
 
   const onScroll = (event: any) => {
     const slideSize = event.nativeEvent.layoutMeasurement.width;
