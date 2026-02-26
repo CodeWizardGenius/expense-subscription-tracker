@@ -1,11 +1,10 @@
+import { createClient } from '@supabase/supabase-js'
+import * as SecureStore from 'expo-secure-store'
 import { AppState, Platform } from 'react-native'
 import 'react-native-url-polyfill/auto'
-// import AsyncStorage from '@react-native-async-storage/async-storage'
-import { createClient, processLock } from '@supabase/supabase-js'
-import * as SecureStore from 'expo-secure-store'
 
 const supabaseUrl = 'https://balcdzxxyyenmfndotai.supabase.co'
-const supabaseAnonKey = 'sb_publishable_Ccy4fbXhwdAS0mZ07crFrg_R48tnVNl'
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhbGNkenh4eXllbm1mbmRvdGFpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg5ODkyMTksImV4cCI6MjA4NDU2NTIxOX0.VWE2vrbYCZanv-ITKAsU_iJAVMp6PsSF_TCVy3ovmug'
 
 const ExpoSecureStoreAdapter = {
     getItem: (key: string) => SecureStore.getItem(key),
@@ -19,7 +18,12 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
         autoRefreshToken: true,
         persistSession: true,
         detectSessionInUrl: false,
-        lock: processLock,
+        // React Native'de navigator.locks API'si yok.
+        // Varsayılan fallback 0ms timeout ile uyarı üretiyor.
+        // Bu basit lock fonksiyonu sorunu çözer.
+        lock: async (name: string, acquireTimeout: number, fn: () => Promise<any>) => {
+            return await fn();
+        },
     },
 })
 

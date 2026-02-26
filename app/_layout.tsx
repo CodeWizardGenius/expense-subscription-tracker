@@ -4,7 +4,7 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { Stack } from "expo-router";
+import { Redirect, Stack, useRouter, useSegments } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { ActivityIndicator, LogBox, View, useColorScheme } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -36,6 +36,12 @@ export default function RootLayout() {
 
 function RootNavigator() {
   const { auth } = useAuth();
+  const segments = useSegments();
+  const router = useRouter();
+
+  const inAuthGroup = segments[0] === "(tabs)";
+  const isLoginPage = segments[0] === "login";
+  const isSignupPage = segments[0] === "signup";
 
   if (auth.isLoading) {
     return (
@@ -45,22 +51,19 @@ function RootNavigator() {
     );
   }
 
+  if (!auth.session && !isLoginPage && !isSignupPage) {
+    return <Redirect href="/login" />;
+  }
+
+  if (auth.session && (isLoginPage || isSignupPage)) {
+    return <Redirect href="/(tabs)" />;
+  }
+
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      {auth.session ? (
-        <>
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen
-            name="modal"
-            options={{ presentation: "modal", title: "Modal" }}
-          />
-        </>
-      ) : (
-        <>
-          <Stack.Screen name="login" />
-          <Stack.Screen name="signup" />
-        </>
-      )}
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="login" options={{ headerShown: false }} />
+      <Stack.Screen name="signup" options={{ headerShown: false }} />
     </Stack>
   );
 }
