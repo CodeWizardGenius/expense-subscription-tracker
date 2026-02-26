@@ -1,19 +1,20 @@
 import { useAuth } from '@/src/contexts/AuthContext';
 import { supabase } from '@/src/lib/supabase';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
-  Car, Check, Delete, House, Pencil, ShoppingBag, TrendingDown, TrendingUp, Utensils
+  Calendar, Car, Check, Delete, House, Pencil, ShoppingBag, TrendingDown, TrendingUp, Utensils
 } from 'lucide-react-native';
 import React, { useState } from 'react';
-import { ActivityIndicator, Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 // --- Constants & Config ---
 const CATEGORIES = [
-  { id: 'food', name: 'Food', Icon: Utensils },
-  { id: 'transport', name: 'Transport', Icon: Car },
-  { id: 'rent', name: 'Rent', Icon: House },
-  { id: 'shopping', name: 'Shopping', Icon: ShoppingBag },
+  { id: 'food', name: 'FOOD', Icon: Utensils },
+  { id: 'transport', name: 'TRANSPORT', Icon: Car },
+  { id: 'rent', name: 'RENT', Icon: House },
+  { id: 'shopping', name: 'SHOPPING', Icon: ShoppingBag },
 ] as const;
 
 const KEYPAD = [
@@ -70,26 +71,21 @@ const Transactions = () => {
   const [type, setType] = useState<'expense' | 'income'>('expense');
   const [selectedCategory, setSelectedCategory] = useState('food');
   const [note, setNote] = useState('');
+  const [date, setDate] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   // Keypad Logic
   const handleNumberPress = (val: string) => {
     setAmount(prev => {
-      // 1. Prevent more than one decimal point
       if (val === '.' && prev.includes('.')) return prev;
-
-      // 2. Limit maximum digits (prevent overflow)
       if (prev.replace('.', '').length >= 9) return prev;
-
-      // 3. Limit to 2 decimal places
       if (prev.includes('.')) {
         const [, decimal] = prev.split('.');
         if (decimal?.length >= 2) return prev;
       }
-
       if (prev === '0' && val !== '.') return val;
       if (prev === '0' && val === '.') return '0.';
-
       return prev + val;
     });
   };
@@ -97,11 +93,16 @@ const Transactions = () => {
   const handleBackspace = () => setAmount(prev => prev.length <= 1 ? '0' : prev.slice(0, -1));
 
   const validate = (numericAmount: number): string | null => {
-    if (isNaN(numericAmount) || numericAmount <= 0) return 'Lütfen geçerli bir tutar giriniz.';
-    if (numericAmount > 100000000) return 'Tutar çok yüksek. Lütfen kontrol ediniz.';
-    if (note.length > 200) return 'Notunuz çok uzun (Maksimum 200 karakter).';
-    if (!auth.session?.user.id) return 'Lütfen önce giriş yapın.';
+    if (isNaN(numericAmount) || numericAmount <= 0) return 'Please enter a valid amount.';
+    if (numericAmount > 100000000) return 'Amount is too high. Please check again.';
+    if (note.length > 200) return 'Note is too long (Maximum 200 characters).';
+    if (!auth.session?.user.id) return 'Please log in first.';
     return null;
+  };
+
+  const onDateChange = (event: any, selectedDate?: Date) => {
+    setShowPicker(Platform.OS === 'ios');
+    if (selectedDate) setDate(selectedDate);
   };
 
   const handleConfirm = async () => {
@@ -109,7 +110,7 @@ const Transactions = () => {
     const errorMsg = validate(numericAmount);
 
     if (errorMsg) {
-      Alert.alert('Hata', errorMsg);
+      Alert.alert('Error', errorMsg);
       return;
     }
 
@@ -121,26 +122,24 @@ const Transactions = () => {
         type,
         category: selectedCategory,
         note,
-        date: new Date().toISOString(),
+        date: date.toISOString(),
       }]);
 
       if (error) throw error;
 
-      Alert.alert('Başarılı', 'İşlem başarıyla kaydedildi.');
+      Alert.alert('Success', 'Transaction saved successfully.');
       setAmount('0');
       setNote('');
+      setDate(new Date());
     } catch (error: any) {
-      Alert.alert('Hata', `İşlem kaydedilemedi: ${error.message}`);
+      Alert.alert('Error', `Transaction could not be saved: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <LinearGradient
-      colors={['#112426', '#121314']}
-      className="flex-1"
-    >
+    <LinearGradient colors={['#112426', '#121314']} className="flex-1">
       <SafeAreaView className="flex-1" edges={['top', 'left', 'right']}>
         <ScrollView
           className="flex-1"
@@ -186,8 +185,35 @@ const Transactions = () => {
             ))}
           </View>
 
+          {/* Date Selector */}
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => setShowPicker(true)}
+            className="flex-row items-center bg-[#141C1C]/80 px-4 py-4 rounded-xl border border-gray-800/50 mb-2"
+          >
+            <View className="bg-[#00FFFF]/10 p-2 rounded-lg">
+              <Calendar size={18} color="#00FFFF" />
+            </View>
+            <View className="ml-4">
+              <Text className="text-gray-500 text-[9px] font-bold uppercase tracking-widest mb-0.5">TRANSACTION DATE</Text>
+              <Text className="text-white font-semibold">
+                {date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}
+              </Text>
+            </View>
+          </TouchableOpacity>
+
+          {showPicker && (
+            <DateTimePicker
+              value={date}
+              mode="date"
+              display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+              onChange={onDateChange}
+              themeVariant="dark"
+            />
+          )}
+
           {/* Note Input */}
-          <View className="flex-row items-center bg-[#141C1C]/80 px-4 py-2 rounded-xl border border-gray-800/50 mb-6">
+          <View className="flex-row items-center bg-[#141C1C]/80 px-4 py-2 rounded-xl border border-gray-800/50 mb-2">
             <Pencil size={18} color="#444" />
             <TextInput
               className="flex-1 ml-3 text-white font-medium"

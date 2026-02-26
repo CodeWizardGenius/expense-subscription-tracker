@@ -1,8 +1,7 @@
+import { createClient } from '@supabase/supabase-js'
+import * as SecureStore from 'expo-secure-store'
 import { AppState, Platform } from 'react-native'
 import 'react-native-url-polyfill/auto'
-// import AsyncStorage from '@react-native-async-storage/async-storage'
-import { createClient, processLock } from '@supabase/supabase-js'
-import * as SecureStore from 'expo-secure-store'
 
 const supabaseUrl = 'https://balcdzxxyyenmfndotai.supabase.co'
 const supabaseAnonKey = 'sb_publishable_Ccy4fbXhwdAS0mZ07crFrg_R48tnVNl'
@@ -19,7 +18,12 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
         autoRefreshToken: true,
         persistSession: true,
         detectSessionInUrl: false,
-        lock: processLock,
+        // React Native'de navigator.locks API'si yok.
+        // Varsayılan fallback 0ms timeout ile uyarı üretiyor.
+        // Bu basit lock fonksiyonu sorunu çözer.
+        lock: async (name: string, acquireTimeout: number, fn: () => Promise<any>) => {
+            return await fn();
+        },
     },
 })
 

@@ -1,5 +1,4 @@
 import { Session } from "@supabase/supabase-js";
-import { router } from "expo-router";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 
@@ -26,16 +25,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     useEffect(() => {
         const { data: { subscription } } = supabase.auth.onAuthStateChange((e, session) => {
-            console.log(e);
             setSession(session);
             setIsLoading(false);
-            if (e === "SIGNED_OUT") {
-                router.replace("/login")
-            } else if (e === "SIGNED_IN") {
-                router.replace("/")
-
-            }
-
         });
 
         return () => {
