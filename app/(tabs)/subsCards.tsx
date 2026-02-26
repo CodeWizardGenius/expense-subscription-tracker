@@ -30,11 +30,11 @@ interface Card {
 }
 
 const SUBSCRIPTIONS = [
-  { id: '1', name: 'Netflix',  price: 10, color: '#e50914', bg: '#2a0a0a', initial: 'N' },
-  { id: '2', name: 'Amazon',   price: 8,  color: '#ff9900', bg: '#2a1f00', initial: 'a' },
-  { id: '3', name: 'Spotify',  price: 12, color: '#1db954', bg: '#0a2a12', initial: 'S' },
-  { id: '4', name: 'Figma',    price: 6,  color: '#a259ff', bg: '#1a0a2a', initial: 'F' },
-  { id: '5', name: 'iCloud',   price: 15, color: '#3b9eff', bg: '#0a1a2a', initial: 'i' },
+  { id: '1', name: 'Netflix', price: 10, color: '#e50914', bg: '#2a0a0a', initial: 'N' },
+  { id: '2', name: 'Amazon', price: 8, color: '#ff9900', bg: '#2a1f00', initial: 'a' },
+  { id: '3', name: 'Spotify', price: 12, color: '#1db954', bg: '#0a2a12', initial: 'S' },
+  { id: '4', name: 'Figma', price: 6, color: '#a259ff', bg: '#1a0a2a', initial: 'F' },
+  { id: '5', name: 'iCloud', price: 15, color: '#3b9eff', bg: '#0a1a2a', initial: 'i' },
 ];
 
 const totalSpending = SUBSCRIPTIONS.reduce((sum, s) => sum + s.price, 0);

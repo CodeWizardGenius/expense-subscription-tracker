@@ -13,7 +13,16 @@ import {
   Wallet,
 } from "lucide-react-native";
 import React, { useState } from "react";
-import { Linking, ScrollView, Switch, Text, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  Linking,
+  Modal,
+  ScrollView,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const formatMemberSince = (dateStr?: string): string => {
@@ -39,6 +48,22 @@ const formatMemberSince = (dateStr?: string): string => {
 const Profile = () => {
   const { auth } = useAuth();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [currencyDropdownVisible, setCurrencyDropdownVisible] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState({
+    label: "USD ($)",
+    value: "USD",
+  });
+
+  const currencies = [
+    { label: "USD ($)", value: "USD" },
+    { label: "EUR (€)", value: "EUR" },
+    { label: "GBP (£)", value: "GBP" },
+    { label: "TRY (₺)", value: "TRY" },
+    { label: "JPY (¥)", value: "JPY" },
+    { label: "CHF (Fr)", value: "CHF" },
+    { label: "CAD ($)", value: "CAD" },
+    { label: "AUD ($)", value: "AUD" },
+  ];
 
   const user = auth.session?.user;
   const userName =
@@ -53,7 +78,8 @@ const Profile = () => {
   };
 
   const handleOpenPrivacy = async () => {
-    const url = "https://codewizardgenius.github.io/Privacy-Policy---Expense-Tracker-Eng/";
+    const url =
+      "https://codewizardgenius.github.io/Privacy-Policy---Expense-Tracker-Eng/";
     try {
       await WebBrowser.openBrowserAsync(url);
     } catch (error) {
@@ -109,6 +135,10 @@ const Profile = () => {
           className="flex-row items-center rounded-2xl px-4 py-4 mb-3"
           style={{ backgroundColor: "#17282A" }}
           activeOpacity={0.7}
+          onPress={() => {
+            console.log("Currency dropdown pressed");
+            setCurrencyDropdownVisible(true);
+          }}
         >
           <View className="w-8 items-center">
             <Wallet size={22} color="#9CA3AF" />
@@ -117,10 +147,71 @@ const Profile = () => {
             Default Currency
           </Text>
           <Text style={{ color: "#06E0F9" }} className="text-base mr-2">
-            USD ($)
+            {selectedCurrency.label}
           </Text>
           <ChevronDown size={20} color="#9CA3AF" />
         </TouchableOpacity>
+
+        {/* Currency Dropdown Modal */}
+        <Modal
+          visible={currencyDropdownVisible}
+          transparent
+          animationType="fade"
+          onRequestClose={() => setCurrencyDropdownVisible(false)}
+        >
+          <View
+            className="flex-1 justify-center items-center"
+            style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
+            onStartShouldSetResponder={() => {
+              setCurrencyDropdownVisible(false);
+              return true;
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: "#17282A",
+                width: "80%",
+                borderRadius: 20,
+                overflow: "hidden",
+              }}
+              onStartShouldSetResponder={() => true}
+              onResponderRelease={(e: any) => e.stopPropagation()}
+            >
+              <Text className="text-white text-base font-semibold px-5 pt-5 pb-3">
+                Select Currency
+              </Text>
+              <FlatList
+                data={currencies}
+                keyExtractor={(item) => item.value}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    className="flex-row items-center justify-between px-5 py-3"
+                    style={{
+                      backgroundColor:
+                        item.value === selectedCurrency.value
+                          ? "#0E3A3D"
+                          : "transparent",
+                    }}
+                    onPress={() => {
+                      setSelectedCurrency(item);
+                      setCurrencyDropdownVisible(false);
+                    }}
+                  >
+                    <Text className="text-white text-base">{item.label}</Text>
+                    {item.value === selectedCurrency.value && (
+                      <Text
+                        style={{ color: "#06E0F9" }}
+                        className="text-base font-bold"
+                      >
+                        ✓
+                      </Text>
+                    )}
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
+          </View>
+        </Modal>
 
         {/* Theme */}
         <TouchableOpacity
