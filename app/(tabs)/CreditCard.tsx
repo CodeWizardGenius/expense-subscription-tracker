@@ -45,15 +45,15 @@ export const CreditCard = memo(({ item, index, email, onPress }: CreditCardProps
         >
             <LinearGradient
                 colors={colors as [string, string, ...string[]]}
-                style={{
-                    height: 240,
-                    borderRadius: 32,
-                    padding: 32,
-                    borderWidth: 1,
-                    borderColor: 'rgba(255,255,255,0.1)',
-                    justifyContent: 'space-between',
-                    overflow: 'hidden'
-                }}
+            style={{ 
+                height: 240, 
+                borderRadius: 32, 
+                padding: 32, 
+                borderWidth: 1,
+                borderColor: 'rgba(255,255,255,0.1)',
+                justifyContent: 'space-between',
+                overflow: 'hidden'
+            }}
             >
                 <View className="flex-row justify-between items-start z-10">
                     <View>

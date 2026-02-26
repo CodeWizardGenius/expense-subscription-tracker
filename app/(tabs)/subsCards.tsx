@@ -10,14 +10,15 @@ import {
   Alert,
   Dimensions,
   FlatList,
+  Image,
   Modal,
+  ScrollView,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-// --- Constants & Types ---
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 interface Card {
@@ -28,7 +29,28 @@ interface Card {
   created_at: string;
 }
 
-// --- Main Screen ---
+const SUBSCRIPTIONS = [
+  { id: '1', name: 'Netflix', price: 10, color: '#e50914', bg: '#2a0a0a', initial: 'N' },
+  { id: '2', name: 'Amazon', price: 8, color: '#ff9900', bg: '#2a1f00', initial: 'a' },
+  { id: '3', name: 'Spotify', price: 12, color: '#1db954', bg: '#0a2a12', initial: 'S' },
+  { id: '4', name: 'Figma', price: 6, color: '#a259ff', bg: '#1a0a2a', initial: 'F' },
+  { id: '5', name: 'iCloud', price: 15, color: '#3b9eff', bg: '#0a1a2a', initial: 'i' },
+];
+
+const totalSpending = SUBSCRIPTIONS.reduce((sum, s) => sum + s.price, 0);
+
+const SubscriptionItem = ({ item }: { item: typeof SUBSCRIPTIONS[0] }) => (
+  <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#111b1b', borderRadius: 16, padding: 14, marginBottom: 10 }}>
+    <View style={{ width: 46, height: 46, borderRadius: 14, backgroundColor: item.bg, alignItems: 'center', justifyContent: 'center', marginRight: 14 }}>
+      <Text style={{ color: item.color, fontSize: 20, fontWeight: '900' }}>{item.initial}</Text>
+    </View>
+    <Text style={{ color: 'white', fontWeight: '600', fontSize: 16, flex: 1 }}>{item.name}</Text>
+    <View style={{ alignItems: 'flex-end' }}>
+      <Text style={{ color: 'white', fontWeight: '700', fontSize: 15 }}>{item.price}$ / Ay</Text>
+      <Text style={{ color: '#4b5563', fontSize: 11, marginTop: 2 }}>14/10/2025</Text>
+    </View>
+  </View>
+);
 
 const SubsCards = () => {
   const { auth } = useAuth();
@@ -37,8 +59,6 @@ const SubsCards = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [editingCard, setEditingCard] = useState<Card | null>(null);
-
-  // Form State
   const [form, setForm] = useState({ name: '', cutoff: '', due: '' });
 
   const fetchCards = async () => {
@@ -69,28 +89,18 @@ const SubsCards = () => {
   const handleSaveCard = async () => {
     const { name, cutoff, due } = form;
     if (!name || !cutoff || !due) return Alert.alert('Error', 'Please fill in all fields.');
-
     const cDay = parseInt(cutoff), dDay = parseInt(due);
     if ([cDay, dDay].some(d => isNaN(d) || d < 1 || d > 31)) return Alert.alert('Error', 'Please enter a valid day (1-31).');
-
     setLoading(p => ({ ...p, submit: true }));
     try {
-      const cardData = {
-        card_name: name,
-        cutoff_day: cDay,
-        due_day: dDay,
-        user_id: auth.session?.user.id,
-      };
-
+      const cardData = { card_name: name, cutoff_day: cDay, due_day: dDay, user_id: auth.session?.user.id };
       let error;
       if (editingCard) {
         ({ error } = await supabase.from('credit_cards').update(cardData).eq('id', editingCard.id));
       } else {
         ({ error } = await supabase.from('credit_cards').insert([{ ...cardData, created_at: new Date().toISOString() }]));
       }
-
       if (error) throw error;
-
       setIsModalVisible(false);
       fetchCards();
     } catch (e: any) {
@@ -102,12 +112,10 @@ const SubsCards = () => {
 
   const handleDeleteCard = async () => {
     if (!editingCard) return;
-
     Alert.alert('Delete Card', 'Are you sure you want to delete this card?', [
       { text: 'Cancel', style: 'cancel' },
       {
-        text: 'Delete',
-        style: 'destructive',
+        text: 'Delete', style: 'destructive',
         onPress: async () => {
           setLoading(p => ({ ...p, submit: true }));
           try {
@@ -126,84 +134,90 @@ const SubsCards = () => {
   };
 
   if (auth.isLoading || loading.fetch) {
-    return <View className="flex-1 bg-[#0A0E14] items-center justify-center"><ActivityIndicator color="#00FFFF" /></View>;
+    return <View style={{ flex: 1, backgroundColor: '#0A0E14', alignItems: 'center', justifyContent: 'center' }}><ActivityIndicator color="#00FFFF" /></View>;
   }
 
   return (
-    <LinearGradient colors={['#112426', '#121314']} className="flex-1">
-      <SafeAreaView className="flex-1" edges={['top']}>
-        <View className="px-6 py-4 items-center"><Text className="text-white text-3xl font-black text-center leading-tight">Subscriptions &{"\n"}Cards</Text></View>
+    <LinearGradient colors={['#112426', '#121314']} style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }} edges={['top']}>
+        <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
 
-        <View className="mt-4">
-          <View className="flex-row justify-between items-center px-8 mb-4">
-            <Text className="text-gray-500 font-bold tracking-widest text-xs uppercase">Cards</Text>
-            <TouchableOpacity onPress={() => openModal()} className="p-1"><Plus color="white" size={24} /></TouchableOpacity>
+          {/* Header */}
+          <View style={{ paddingHorizontal: 24, paddingVertical: 16, alignItems: 'center' }}>
+            <Text style={{ color: 'white', fontSize: 28, fontWeight: '900', textAlign: 'center', lineHeight: 34 }}>{"Subscriptions &\nCards"}</Text>
           </View>
 
-          <FlatList
-            data={cards}
-            horizontal
-            pagingEnabled
-            snapToInterval={CARD_WIDTH + 16}
-            decelerationRate="fast"
-            onScroll={e => setActiveIndex(Math.round(e.nativeEvent.contentOffset.x / e.nativeEvent.layoutMeasurement.width))}
-            renderItem={({ item, index }) => (
-              <CreditCard
-                item={item}
-                index={index}
-                email={auth.session?.user.email}
-                onPress={() => openModal(item)}
-              />
-            )}
-            contentContainerStyle={{ paddingHorizontal: (SCREEN_WIDTH - CARD_WIDTH) / 2 - 8 }}
-            showsHorizontalScrollIndicator={false}
-            ListEmptyComponent={<View style={{ width: CARD_WIDTH }} className="h-52 rounded-3xl border border-dashed border-white/20 items-center justify-center mx-2"><Text className="text-white/40">No cards added yet</Text></View>}
-          />
+          {/* Cards */}
+          <View style={{ marginTop: 8 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 32, marginBottom: 16 }}>
+              <Text style={{ color: '#6b7280', fontWeight: 'bold', letterSpacing: 3, fontSize: 11, textTransform: 'uppercase' }}>Cards</Text>
+              <TouchableOpacity onPress={() => openModal()} style={{ padding: 4 }}><Plus color="white" size={24} /></TouchableOpacity>
+            </View>
 
-          <View className="flex-row justify-center mt-6 gap-2">
-            {(cards.length > 0 ? cards : [null]).map((_, i) => (
-              <View key={i} className={`h-2 rounded-full ${i === activeIndex ? 'w-8 bg-[#00FFFF]' : 'w-2 bg-gray-600'}`} />
-            ))}
+            <FlatList
+              data={cards}
+              horizontal
+              pagingEnabled={false}
+              snapToInterval={CARD_WIDTH + 16}
+              snapToAlignment="center"
+              decelerationRate="fast"
+              onScroll={e => setActiveIndex(Math.round(e.nativeEvent.contentOffset.x / (CARD_WIDTH + 16)))}
+              scrollEventThrottle={16}
+              renderItem={({ item, index }) => (
+                <CreditCard item={item} index={index} email={auth.session?.user.email} onPress={() => openModal(item)} />
+              )}
+              ItemSeparatorComponent={() => <View style={{ width: 16 }} />}
+              contentContainerStyle={{ paddingHorizontal: (SCREEN_WIDTH - CARD_WIDTH) / 2 }}
+              showsHorizontalScrollIndicator={false}
+              ListEmptyComponent={
+                <View style={{ width: CARD_WIDTH, height: 200, borderRadius: 24, borderWidth: 1, borderStyle: 'dashed', borderColor: 'rgba(255,255,255,0.2)', alignItems: 'center', justifyContent: 'center' }}>
+                  <Text style={{ color: 'rgba(255,255,255,0.4)' }}>No cards added yet</Text>
+                </View>
+              }
+            />
+
+            {/* Dots */}
+            <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 20, gap: 8 }}>
+              {(cards.length > 0 ? cards : [null]).map((_, i) => (
+                <View key={i} style={{ height: 8, borderRadius: 4, width: i === activeIndex ? 32 : 8, backgroundColor: i === activeIndex ? '#00FFFF' : '#4b5563' }} />
+              ))}
+            </View>
           </View>
-        </View>
 
+          {/* Subscriptions */}
+          <View style={{ paddingHorizontal: 20, marginTop: 28 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+              <Text style={{ color: '#6b7280', fontWeight: 'bold', letterSpacing: 3, fontSize: 11, textTransform: 'uppercase' }}>Subscriptions</Text>
+            </View>
+            <Text style={{ color: '#00FFFF', fontSize: 13, fontWeight: 'bold', marginBottom: 16 }}>
+              Total spending this month: {totalSpending}$
+            </Text>
+            {SUBSCRIPTIONS.map(item => <SubscriptionItem key={item.id} item={item} />)}
+          </View>
+
+        </ScrollView>
+
+        {/* Modal */}
         <Modal visible={isModalVisible} animationType="slide" transparent onRequestClose={() => setIsModalVisible(false)}>
-          <View className="flex-1 justify-end bg-black/60">
-            <View className="bg-[#111B1B] rounded-t-[40px] p-8 pb-12 border-t border-white/10">
-              <View className="flex-row justify-between items-center mb-8">
-                <Text className="text-white text-2xl font-bold">{editingCard ? 'Edit Card' : 'New Card'}</Text>
-                <TouchableOpacity onPress={() => setIsModalVisible(false)} className="bg-white/10 p-2 rounded-full"><X color="white" size={20} /></TouchableOpacity>
+          <View style={{ flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.6)' }}>
+            <View style={{ backgroundColor: '#111B1B', borderTopLeftRadius: 40, borderTopRightRadius: 40, padding: 32, paddingBottom: 48, borderTopWidth: 1, borderColor: 'rgba(255,255,255,0.1)' }}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 32 }}>
+                <Text style={{ color: 'white', fontSize: 22, fontWeight: 'bold' }}>{editingCard ? 'Edit Card' : 'New Card'}</Text>
+                <TouchableOpacity onPress={() => setIsModalVisible(false)} style={{ backgroundColor: 'rgba(255,255,255,0.1)', padding: 8, borderRadius: 999 }}><X color="white" size={20} /></TouchableOpacity>
               </View>
-
-              <View className="gap-6">
+              <View style={{ gap: 24 }}>
                 <FormInput label="Card Name" placeholder="e.g. Mastercard" value={form.name} onChangeText={t => setForm(p => ({ ...p, name: t }))} />
-                <View className="flex-row gap-4">
+                <View style={{ flexDirection: 'row', gap: 16 }}>
                   <FormInput label="Cutoff Day" className="flex-1" keyboardType="numeric" maxLength={2} placeholder="1-31" value={form.cutoff} onChangeText={t => setForm(p => ({ ...p, cutoff: t }))} />
                   <FormInput label="Due Day" className="flex-1" keyboardType="numeric" maxLength={2} placeholder="1-31" value={form.due} onChangeText={t => setForm(p => ({ ...p, due: t }))} />
                 </View>
-
-                <View className="gap-3 mt-4">
-                  <TouchableOpacity
-                    onPress={handleSaveCard}
-                    disabled={loading.submit}
-                    className="bg-[#00FFFF] py-5 rounded-3xl items-center shadow-lg shadow-[#00FFFF]/30"
-                  >
-                    {loading.submit ? (
-                      <ActivityIndicator color="#0D1A1A" />
-                    ) : (
-                      <Text className="text-[#0D1A1A] font-black text-lg uppercase">
-                        {editingCard ? 'Update Card' : 'Create Card'}
-                      </Text>
-                    )}
+                <View style={{ gap: 12, marginTop: 16 }}>
+                  <TouchableOpacity onPress={handleSaveCard} disabled={loading.submit} style={{ backgroundColor: '#00FFFF', paddingVertical: 18, borderRadius: 32, alignItems: 'center' }}>
+                    {loading.submit ? <ActivityIndicator color="#0D1A1A" /> : <Text style={{ color: '#0D1A1A', fontWeight: '900', fontSize: 16, textTransform: 'uppercase' }}>{editingCard ? 'Update Card' : 'Create Card'}</Text>}
                   </TouchableOpacity>
-
                   {editingCard && (
-                    <TouchableOpacity
-                      onPress={handleDeleteCard}
-                      disabled={loading.submit}
-                      className="py-4 items-center"
-                    >
-                      <Text className="text-red-500 font-bold uppercase tracking-widest">Delete Card</Text>
+                    <TouchableOpacity onPress={handleDeleteCard} disabled={loading.submit} style={{ paddingVertical: 16, alignItems: 'center' }}>
+                      <Text style={{ color: '#ef4444', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: 3 }}>Delete Card</Text>
                     </TouchableOpacity>
                   )}
                 </View>
@@ -217,4 +231,3 @@ const SubsCards = () => {
 };
 
 export default SubsCards;
-

@@ -139,10 +139,10 @@ const Transactions = () => {
   };
 
   return (
-    <LinearGradient colors={['#112426', '#121314']} className="flex-1">
-      <SafeAreaView className="flex-1" edges={['top', 'left', 'right']}>
+    <LinearGradient colors={['#112426', '#121314']} style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
         <ScrollView
-          className="flex-1"
+          style={{ flex: 1 }}
           contentContainerStyle={{ paddingHorizontal: 32, paddingBottom: 140 }}
           showsVerticalScrollIndicator={false}
         >
