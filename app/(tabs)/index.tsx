@@ -4,7 +4,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import * as SecureStore from 'expo-secure-store';
-import { Delete } from 'lucide-react-native';
+import { Car, CreditCard, Delete, House, ShoppingBag, Utensils } from 'lucide-react-native';
 import React, { useCallback, useState } from "react";
 import { Image, Modal, RefreshControl, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Svg, { Circle, G, Path } from "react-native-svg";
@@ -313,31 +313,50 @@ const Index = () => {
           </TouchableOpacity>
         </View>
 
-        {/* Recent Subscriptions */}
+        {/* Recent Transactions */}
         <View className="px-5">
           <View className="flex-row justify-between items-center mb-4">
-            <Text className="text-white text-lg font-semibold">Recent Subs</Text>
-            <TouchableOpacity onPress={() => router.push('/(tabs)/subsCards')}>
-              <Text className="text-accent text-sm font-medium">View All</Text>
+            <Text className="text-white text-lg font-semibold">Recent Transactions</Text>
+            <TouchableOpacity onPress={() => router.push('/(tabs)/transactions')}>
+              <Text className="text-accent text-sm font-medium">Add New</Text>
             </TouchableOpacity>
           </View>
           <View className="gap-3">
-            {SUBS_DATA.slice(0, 4).map((sub) => {
+            {transactions.filter(t => t.type === 'expense').slice(0, 4).map((tx) => {
+              const catColor = CATEGORY_COLORS[tx.category] || CATEGORY_COLORS.other;
+              const txDate = new Date(tx.date);
+              const isToday = txDate.toDateString() === new Date().toDateString();
+              const dateStr = isToday ? `Today, ${txDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}` : txDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+              
+              let IconComp = CreditCard;
+              if (tx.category === 'food') IconComp = Utensils;
+              if (tx.category === 'transport') IconComp = Car;
+              if (tx.category === 'rent') IconComp = House;
+              if (tx.category === 'shopping') IconComp = ShoppingBag;
+
               return (
-                <View key={sub.id} className="flex-row items-center bg-transaction-bg p-4 rounded-2xl">
-                  <View className="w-11 h-11 rounded-xl items-center justify-center mr-3" style={{ backgroundColor: sub.bg }}>
-                    <Text style={{ color: sub.color }} className="text-lg font-bold">{sub.initial}</Text>
+                <View key={tx.id || Math.random().toString()} className="flex-row items-center bg-transaction-bg p-4 rounded-2xl">
+                  <View className="w-11 h-11 rounded-xl items-center justify-center mr-3" style={{ backgroundColor: `${catColor}20` }}>
+                    <IconComp size={22} color={catColor} />
                   </View>
                   <View className="flex-1">
-                    <Text className="text-white text-sm font-medium mb-0.5">{sub.name} Subscription</Text>
-                    <Text className="text-gray-500 text-xs">Today, 10:45 AM</Text>
+                    <Text className="text-white text-sm font-medium mb-0.5" numberOfLines={1}>
+                      {tx.note || (tx.category ? tx.category.charAt(0).toUpperCase() + tx.category.slice(1) : 'Expense')}
+                    </Text>
+                    <Text className="text-gray-500 text-xs">{dateStr}</Text>
                   </View>
                   <Text className="text-white text-base font-semibold">
-                    -{formatCurrency(sub.price)}
+                    -{formatCurrency(tx.amount)}
                   </Text>
                 </View>
               );
             })}
+
+            {transactions.filter(t => t.type === 'expense').length === 0 && (
+              <View className="bg-transaction-bg p-6 rounded-2xl items-center justify-center">
+                 <Text className="text-gray-500 text-sm">No recent transactions found.</Text>
+              </View>
+            )}
           </View>
         </View>
       </ScrollView>

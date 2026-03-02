@@ -85,3 +85,5 @@ export const CreditCard = memo(({ item, index, email, onPress }: CreditCardProps
         </TouchableOpacity>
     );
 });
+
+export default CreditCard;
