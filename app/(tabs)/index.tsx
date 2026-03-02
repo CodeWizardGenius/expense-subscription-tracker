@@ -123,8 +123,9 @@ const Index = () => {
       let monthExpense = 0;
       const catTotals: Record<string, number> = {};
 
-      const currentMonthIndex = new Date().getMonth();
-      const currentYear = new Date().getFullYear();
+      const now = new Date();
+      const thirtyDaysAgo = new Date(now);
+      thirtyDaysAgo.setDate(now.getDate() - 30);
 
       txs.forEach(tx => {
         if (tx.type === 'income') {
@@ -132,7 +133,7 @@ const Index = () => {
         } else {
           balance -= tx.amount;
           const txDate = new Date(tx.date);
-          if (txDate.getMonth() === currentMonthIndex && txDate.getFullYear() === currentYear) {
+          if (txDate >= thirtyDaysAgo && txDate <= now) {
             monthExpense += tx.amount;
             const cat = tx.category || 'other';
             catTotals[cat] = (catTotals[cat] || 0) + tx.amount;
@@ -220,7 +221,7 @@ const Index = () => {
     );
   }
 
-  const currentMonthStr = monthNames[new Date().getMonth()];
+  const currentMonthStr = "30d";
   const goalPercentage = targetGoal > 0 ? Math.min((currentExpense / targetGoal) * 100, 100) : 0;
 
   return (

@@ -2,13 +2,13 @@ import { useAuth } from '@/src/contexts/AuthContext';
 import { supabase } from '@/src/lib/supabase';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  ActivityIndicator,
-  Animated,
-  RefreshControl,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
+    ActivityIndicator,
+    Animated,
+    RefreshControl,
+    ScrollView,
+    Text,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 import Svg, { Circle, G } from 'react-native-svg';
 
@@ -195,7 +195,8 @@ function getPeriodRange(period: Period): { from: string; to: string } {
     from = new Date(now);
     from.setDate(now.getDate() - 6);
   } else if (period === 'Month') {
-    from = new Date(now.getFullYear(), now.getMonth(), 1);
+    from = new Date(now);
+    from.setDate(now.getDate() - 30);
   } else {
     from = new Date(now.getFullYear(), 0, 1);
   }
@@ -223,16 +224,18 @@ function buildBarData(transactions: Transaction[], period: Period): DayStat[] {
   }
 
   if (period === 'Month') {
-    // Group by week of month (W1-W4)
+    // 4 weeks backward (W1 is oldest, W4 is most recent 7 days)
     const weeks: DayStat[] = [
       { day: 'W1', value: 0, fullDate: '1' },
       { day: 'W2', value: 0, fullDate: '2' },
       { day: 'W3', value: 0, fullDate: '3' },
       { day: 'W4', value: 0, fullDate: '4' },
     ];
+    const nowTime = now.getTime();
     transactions.forEach((t) => {
-      const day = new Date(t.date).getDate();
-      const weekIndex = Math.min(Math.floor((day - 1) / 7), 3);
+      const tTime = new Date(t.date).getTime();
+      const diffDays = Math.max(0, Math.floor((nowTime - tTime) / (1000 * 60 * 60 * 24)));
+      const weekIndex = Math.max(0, 3 - Math.min(Math.floor(diffDays / 7), 3));
       weeks[weekIndex].value += t.amount;
     });
     return weeks;
@@ -441,7 +444,7 @@ const Analytics = () => {
                 <View>
                   <Text className="text-white text-base font-bold">Spending Trend</Text>
                   <Text style={{ color: '#4b7070', fontSize: 12, marginTop: 2 }}>
-                    {period === 'Week' ? 'Last 7 days' : period === 'Month' ? 'This month' : 'This year'}
+                    {period === 'Week' ? 'Last 7 days' : period === 'Month' ? 'Last 30 days' : 'This year'}
                   </Text>
                 </View>
                 <Text style={{ color: '#4b7070', fontSize: 18, letterSpacing: 2 }}>···</Text>
