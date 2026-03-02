@@ -15,8 +15,8 @@ import {
 } from 'react-native';
 
 const Login = () => {
-  const [email, setEmail] = useState<string>('tturk753@gmail.com');
-  const [password, setPassword] = useState<string>('Password123.');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
