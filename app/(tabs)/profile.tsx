@@ -269,6 +269,15 @@ const Profile = () => {
           className="flex-row items-center rounded-2xl px-4 py-4 mb-6"
           style={{ backgroundColor: "#17282A" }}
           activeOpacity={0.7}
+          onPress={async () => {
+            const url =
+              "https://codewizardgenius.github.io/expense-subscription-tracker-profile-delete-form/";
+            try {
+              await WebBrowser.openBrowserAsync(url);
+            } catch (error) {
+              await Linking.openURL(url);
+            }
+          }}
         >
           <View className="w-8 items-center">
             <Trash2 size={22} color="#9CA3AF" />
