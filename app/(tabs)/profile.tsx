@@ -29,6 +29,8 @@ import { WebView } from "react-native-webview";
 
 const PRIVACY_URL =
   "https://codewizardgenius.github.io/expense-tracker-privacy/";
+const DELETE_ACCOUNT_URL =
+  "https://codewizardgenius.github.io/expense-subscription-tracker-profile-delete-form/";
 
 const formatMemberSince = (dateStr?: string): string => {
   if (!dateStr) return "";
@@ -55,6 +57,7 @@ const Profile = () => {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [currencyDropdownVisible, setCurrencyDropdownVisible] = useState(false);
   const [privacyModalVisible, setPrivacyModalVisible] = useState(false);
+  const [deleteAccountModalVisible, setDeleteAccountModalVisible] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState({
     label: "USD ($)",
     value: "USD",
@@ -268,15 +271,7 @@ const Profile = () => {
           className="flex-row items-center rounded-2xl px-4 py-4 mb-6"
           style={{ backgroundColor: "#17282A" }}
           activeOpacity={0.7}
-          onPress={async () => {
-            const url =
-              "https://codewizardgenius.github.io/expense-subscription-tracker-profile-delete-form/";
-            try {
-              await WebBrowser.openBrowserAsync(url);
-            } catch (error) {
-              await Linking.openURL(url);
-            }
-          }}
+          onPress={() => setDeleteAccountModalVisible(true)}
         >
           <View className="w-8 items-center">
             <Trash2 size={22} color="#9CA3AF" />
@@ -353,6 +348,64 @@ const Profile = () => {
           {/* WebView */}
           <WebView
             source={{ uri: PRIVACY_URL }}
+            style={{ flex: 1, backgroundColor: "#161C1C" }}
+            startInLoadingState
+            renderLoading={() => (
+              <View
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "#161C1C",
+                }}
+              >
+                <ActivityIndicator size="large" color="#06E0F9" />
+              </View>
+            )}
+          />
+        </View>
+      </Modal>
+
+      {/* Delete Account WebView Modal */}
+      <Modal
+        visible={deleteAccountModalVisible}
+        animationType="slide"
+        onRequestClose={() => setDeleteAccountModalVisible(false)}
+      >
+        <View style={{ flex: 1, backgroundColor: "#161C1C" }}>
+          <View
+            style={{
+              paddingTop: Platform.OS === "ios" ? 60 : (StatusBar.currentHeight || 24) + 10,
+              paddingBottom: 12,
+              paddingHorizontal: 16,
+              backgroundColor: "#17282A",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => setDeleteAccountModalVisible(false)}
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: 18,
+                backgroundColor: "#2A3435",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text style={{ color: "#fff", fontSize: 18, fontWeight: "bold" }}>✕</Text>
+            </TouchableOpacity>
+            <Text style={{ color: "#fff", fontSize: 18, fontWeight: "600", flex: 1, textAlign: "center", marginRight: 36 }}>
+              Delete Account
+            </Text>
+          </View>
+          <WebView
+            source={{ uri: DELETE_ACCOUNT_URL }}
             style={{ flex: 1, backgroundColor: "#161C1C" }}
             startInLoadingState
             renderLoading={() => (
