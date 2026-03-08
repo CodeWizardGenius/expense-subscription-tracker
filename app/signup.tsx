@@ -2,16 +2,16 @@ import { signUpWithEmail } from '@/src/features/auth/signup';
 import { Link } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  ActivityIndicator,
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    ActivityIndicator,
+    Image,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 
 const SignUp = () => {
@@ -50,11 +50,10 @@ const SignUp = () => {
         {/* Logo */}
         <View style={styles.logoContainer}>
           <Image
-            source={require('../assets/images/finance.png')}
-            style={styles.logoImage}
+            source={require('../logo.png')}
+            style={{ width: 480, height: 270, marginBottom: 14 }}
             resizeMode="contain"
           />
-          <Text style={styles.appName}>MONET</Text>
         </View>
 
         {/* Card */}

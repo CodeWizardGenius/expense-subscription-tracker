@@ -3,6 +3,7 @@ import { Link } from 'expo-router';
 import React, { useState } from 'react';
 import {
   ActivityIndicator,
+  Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -14,8 +15,8 @@ import {
 } from 'react-native';
 
 const Login = () => {
-  const [email, setEmail] = useState<string>('tturk753@gmail.com');
-  const [password, setPassword] = useState<string>('Password123.');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
@@ -42,10 +43,11 @@ const Login = () => {
       >
         {/* Logo */}
         <View style={styles.logoContainer}>
-          <View style={styles.logoCircle}>
-            <Text style={styles.logoIcon}>📈</Text>
-          </View>
-          <Text style={styles.appName}>MONET</Text>
+          <Image
+             source={require('../logo.png')}
+             style={{ width: 480, height: 270, marginBottom: 14 }}
+             resizeMode="contain"
+          />
         </View>
 
         {/* Card */}
