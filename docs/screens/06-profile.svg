@@ -1,0 +1,70 @@
+<svg viewBox="0 0 320 660" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Profile screen">
+  <rect x="6" y="6" width="308" height="648" rx="44" fill="#05090b" stroke="#1f2a2a" stroke-width="2"/>
+  <rect x="16" y="16" width="288" height="628" rx="36" fill="#161c1c"/>
+  <rect x="124" y="24" width="72" height="14" rx="7" fill="#05090b"/>
+
+  <text x="160" y="68" font-family="Arial" font-size="17" fill="#fff" text-anchor="middle" font-weight="bold">Profile</text>
+
+  <!-- Profile card -->
+  <rect x="32" y="86" width="256" height="120" rx="22" fill="#17282a"/>
+  <circle cx="160" cy="128" r="30" fill="#d1d5db"/>
+  <circle cx="160" cy="120" r="11" fill="#9ca3af"/>
+  <path d="M142 150 a18 16 0 0 1 36 0" fill="#9ca3af"/>
+  <text x="160" y="180" font-family="Arial" font-size="16" fill="#fff" text-anchor="middle" font-weight="bold">Emre</text>
+  <text x="160" y="196" font-family="Arial" font-size="10" fill="#6b7280" text-anchor="middle">Member since Jan 2026</text>
+
+  <text x="40" y="232" font-family="Arial" font-size="13" fill="#fff" font-weight="bold">App Preferences</text>
+
+  <!-- Currency -->
+  <rect x="32" y="244" width="256" height="48" rx="14" fill="#17282a"/>
+  <circle cx="56" cy="268" r="9" fill="none" stroke="#9ca3af" stroke-width="1.6"/>
+  <text x="56" y="272" font-family="Arial" font-size="10" fill="#9ca3af" text-anchor="middle">$</text>
+  <text x="76" y="272" font-family="Arial" font-size="13" fill="#fff">Default Currency</text>
+  <text x="246" y="272" font-family="Arial" font-size="12" fill="#06e0f9" text-anchor="end">USD ($)</text>
+  <text x="270" y="272" font-family="Arial" font-size="12" fill="#9ca3af">▾</text>
+
+  <!-- Theme -->
+  <rect x="32" y="300" width="256" height="48" rx="14" fill="#17282a"/>
+  <path d="M52 268" />
+  <path d="M52 324 a9 9 0 1 0 9 -9 a7 7 0 0 1 -9 9 z" fill="#9ca3af" transform="translate(0 0)"/>
+  <text x="76" y="328" font-family="Arial" font-size="13" fill="#fff">Theme</text>
+  <text x="246" y="328" font-family="Arial" font-size="12" fill="#06e0f9" text-anchor="end">Dark</text>
+  <text x="270" y="328" font-family="Arial" font-size="12" fill="#9ca3af">▾</text>
+
+  <!-- Notifications -->
+  <rect x="32" y="356" width="256" height="48" rx="14" fill="#17282a"/>
+  <path d="M50 384 a6 6 0 0 1 12 0 v3 l2 3 h-16 l2 -3 z M54 390 a2 2 0 0 0 4 0" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+  <text x="76" y="384" font-family="Arial" font-size="13" fill="#fff">Notifications</text>
+  <rect x="236" y="372" width="40" height="22" rx="11" fill="#06e0f9"/>
+  <circle cx="266" cy="383" r="8" fill="#fff"/>
+
+  <!-- Log out -->
+  <rect x="32" y="412" width="256" height="48" rx="14" fill="#17282a"/>
+  <path d="M58 428 h-6 a2 2 0 0 0 -2 2 v12 a2 2 0 0 0 2 2 h6 M61 430 l4 6 -4 6 M65 436 h-10" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="76" y="440" font-family="Arial" font-size="13" fill="#fff">Log out</text>
+
+  <!-- Delete -->
+  <rect x="32" y="468" width="256" height="48" rx="14" fill="#17282a"/>
+  <path d="M50 432" />
+  <path d="M51 490 h12 M53 490 v10 a1 1 0 0 0 1 1 h6 a1 1 0 0 0 1 -1 v-10 M55 490 v-2 a1 1 0 0 1 1 -1 h2 a1 1 0 0 1 1 1 v2" fill="none" stroke="#9ca3af" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="76" y="497" font-family="Arial" font-size="13" fill="#fff">Delete Account</text>
+  <text x="272" y="498" font-family="Arial" font-size="13" text-anchor="end">&#9888;</text>
+
+  <!-- Privacy -->
+  <rect x="32" y="528" width="256" height="56" rx="20" fill="#17282a"/>
+  <rect x="48" y="540" width="34" height="32" rx="11" fill="#153b3e"/>
+  <path d="M65 547 l8 3 v6 a8 8 0 0 1 -8 8 a8 8 0 0 1 -8 -8 v-6 z" fill="none" stroke="#000" stroke-width="1.4"/>
+  <path d="M61 556 l3 3 5 -6" fill="none" stroke="#000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="96" y="561" font-family="Arial" font-size="14" fill="#fff" font-weight="bold">Privacy &amp; Policy</text>
+  <text x="272" y="561" font-family="Arial" font-size="16" fill="#555" text-anchor="end">›</text>
+
+  <!-- Tab bar -->
+  <rect x="44" y="600" width="232" height="44" rx="22" fill="#171717" stroke="#454949" stroke-width="2"/>
+  <g stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M70 628 v-7 l8 -6 8 6 v7 z" stroke="#6b7280"/>
+    <circle cx="113" cy="622" r="8" stroke="#6b7280"/>
+    <path d="M156 615 v14 M149 622 h14" stroke="#6b7280"/>
+    <path d="M192 628 v-6 M199 628 v-11 M206 628 v-8" stroke="#6b7280"/>
+    <path d="M243 628 a8 8 0 0 1 16 0 M251 617 a4 4 0 1 0 0.1 0" stroke="#06e0f9"/>
+  </g>
+</svg>

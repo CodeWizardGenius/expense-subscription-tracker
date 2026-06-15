@@ -1,0 +1,82 @@
+<svg viewBox="0 0 320 660" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Subscriptions and cards screen">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#112426"/>
+      <stop offset="1" stop-color="#121314"/>
+    </linearGradient>
+    <linearGradient id="ccard" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d1a1a"/>
+      <stop offset="1" stop-color="#132626"/>
+    </linearGradient>
+  </defs>
+  <rect x="6" y="6" width="308" height="648" rx="44" fill="#05090b" stroke="#1f2a2a" stroke-width="2"/>
+  <rect x="16" y="16" width="288" height="628" rx="36" fill="url(#bg)"/>
+  <rect x="124" y="24" width="72" height="14" rx="7" fill="#05090b"/>
+
+  <text x="160" y="66" font-family="Arial" font-size="17" fill="#fff" text-anchor="middle" font-weight="bold">Subscriptions &amp;</text>
+  <text x="160" y="86" font-family="Arial" font-size="17" fill="#fff" text-anchor="middle" font-weight="bold">Cards</text>
+
+  <text x="44" y="116" font-family="Arial" font-size="10" fill="#6b7280" letter-spacing="3" font-weight="bold">CARDS</text>
+  <text x="276" y="118" font-family="Arial" font-size="18" fill="#fff" text-anchor="end">+</text>
+
+  <!-- Credit card -->
+  <rect x="44" y="128" width="232" height="140" rx="24" fill="url(#ccard)" stroke="#ffffff1a"/>
+  <text x="64" y="156" font-family="Arial" font-size="8" fill="#ffffff80" letter-spacing="2" font-weight="bold">CARD NAME</text>
+  <text x="64" y="176" font-family="Arial" font-size="18" fill="#fff" font-weight="bold">Mastercard</text>
+  <rect x="236" y="146" width="26" height="20" rx="5" fill="#ca8a0433" stroke="#ca8a0455"/>
+  <text x="64" y="212" font-family="Arial" font-size="14" fill="#ffffffe6" letter-spacing="3">•••• •••• •••• ••••</text>
+  <text x="64" y="240" font-family="Arial" font-size="7" fill="#ffffff66" letter-spacing="1" font-weight="bold">CARD HOLDER</text>
+  <text x="64" y="252" font-family="Arial" font-size="11" fill="#fff" letter-spacing="1" font-weight="bold">EMRE</text>
+  <text x="214" y="240" font-family="Arial" font-size="7" fill="#ffffff4d" text-anchor="middle" font-weight="bold">CUTOFF</text>
+  <text x="214" y="252" font-family="Arial" font-size="11" fill="#00ffff" text-anchor="middle" font-weight="bold">15</text>
+  <text x="252" y="240" font-family="Arial" font-size="7" fill="#ffffff4d" text-anchor="middle" font-weight="bold">DUE</text>
+  <text x="252" y="252" font-family="Arial" font-size="11" fill="#00ffff" text-anchor="middle" font-weight="bold">25</text>
+
+  <rect x="140" y="280" width="32" height="7" rx="3" fill="#00ffff"/>
+  <circle cx="184" cy="283" r="3.5" fill="#4b5563"/>
+
+  <!-- Subscriptions -->
+  <text x="40" y="318" font-family="Arial" font-size="10" fill="#6b7280" letter-spacing="3" font-weight="bold">SUBSCRIPTIONS</text>
+  <text x="280" y="320" font-family="Arial" font-size="18" fill="#fff" text-anchor="end">+</text>
+  <text x="40" y="342" font-family="Arial" font-size="12" fill="#00ffff" font-weight="bold">Bu ay toplam: 45.00$</text>
+
+  <g font-family="Arial">
+    <rect x="32" y="354" width="256" height="50" rx="16" fill="#111b1b"/>
+    <rect x="44" y="366" width="26" height="26" rx="8" fill="#2a0a0a"/>
+    <text x="57" y="385" font-size="14" fill="#e50914" text-anchor="middle" font-weight="bold">N</text>
+    <text x="82" y="384" font-size="13" fill="#fff" font-weight="bold">Netflix</text>
+    <text x="276" y="378" font-size="12" fill="#fff" text-anchor="end" font-weight="bold">10$ / Ay</text>
+    <text x="276" y="392" font-size="9" fill="#4b5563" text-anchor="end">Her ayın 5. günü</text>
+
+    <rect x="32" y="412" width="256" height="50" rx="16" fill="#111b1b"/>
+    <rect x="44" y="424" width="26" height="26" rx="8" fill="#0a2a12"/>
+    <text x="57" y="443" font-size="14" fill="#1db954" text-anchor="middle" font-weight="bold">S</text>
+    <text x="82" y="442" font-size="13" fill="#fff" font-weight="bold">Spotify</text>
+    <text x="276" y="436" font-size="12" fill="#fff" text-anchor="end" font-weight="bold">12$ / Ay</text>
+    <text x="276" y="450" font-size="9" fill="#4b5563" text-anchor="end">Her ayın 12. günü</text>
+
+    <rect x="32" y="470" width="256" height="50" rx="16" fill="#111b1b"/>
+    <rect x="44" y="482" width="26" height="26" rx="8" fill="#1a0a2a"/>
+    <text x="57" y="501" font-size="14" fill="#a259ff" text-anchor="middle" font-weight="bold">F</text>
+    <text x="82" y="500" font-size="13" fill="#fff" font-weight="bold">Figma</text>
+    <text x="276" y="494" font-size="12" fill="#fff" text-anchor="end" font-weight="bold">8$ / Ay</text>
+    <text x="276" y="508" font-size="9" fill="#4b5563" text-anchor="end">Her ayın 1. günü</text>
+
+    <rect x="32" y="528" width="256" height="50" rx="16" fill="#111b1b"/>
+    <rect x="44" y="540" width="26" height="26" rx="8" fill="#0a1a2a"/>
+    <text x="57" y="559" font-size="14" fill="#3b9eff" text-anchor="middle" font-weight="bold">i</text>
+    <text x="82" y="558" font-size="13" fill="#fff" font-weight="bold">iCloud</text>
+    <text x="276" y="552" font-size="12" fill="#fff" text-anchor="end" font-weight="bold">15$ / Ay</text>
+    <text x="276" y="566" font-size="9" fill="#4b5563" text-anchor="end">Her ayın 20. günü</text>
+  </g>
+
+  <!-- Tab bar -->
+  <rect x="44" y="596" width="232" height="44" rx="22" fill="#171717" stroke="#454949" stroke-width="2"/>
+  <g stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M70 624 v-7 l8 -6 8 6 v7 z" stroke="#6b7280"/>
+    <circle cx="113" cy="618" r="8" stroke="#06e0f9"/><text x="113" y="622" font-size="9" fill="#06e0f9" text-anchor="middle" stroke="none">$</text>
+    <path d="M156 611 v14 M149 618 h14" stroke="#6b7280"/>
+    <path d="M192 624 v-6 M199 624 v-11 M206 624 v-8" stroke="#6b7280"/>
+    <path d="M243 624 a8 8 0 0 1 16 0 M251 613 a4 4 0 1 0 0.1 0" stroke="#6b7280"/>
+  </g>
+</svg>

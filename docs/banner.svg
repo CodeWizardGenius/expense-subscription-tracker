@@ -1,0 +1,63 @@
+<svg viewBox="0 0 1200 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MONET - Expense and Subscription Tracker">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a1f1f"/>
+      <stop offset="0.5" stop-color="#112426"/>
+      <stop offset="1" stop-color="#0a0e14"/>
+    </linearGradient>
+    <linearGradient id="mtq" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#86dde4"/>
+      <stop offset="1" stop-color="#2a9aa6"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#00f5e0"/>
+      <stop offset="1" stop-color="#06e0f9"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.85" cy="0.3" r="0.6">
+      <stop offset="0" stop-color="#00f5e0" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#00f5e0" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="300" rx="24" fill="url(#bg)"/>
+  <rect width="1200" height="300" rx="24" fill="url(#glow)"/>
+
+  <!-- Decorative donut -->
+  <g transform="translate(1010 150)" opacity="0.9">
+    <circle r="78" fill="none" stroke="#1a2e2e" stroke-width="20"/>
+    <circle r="78" fill="none" stroke="#00f5e0" stroke-width="20" stroke-dasharray="270 220" transform="rotate(-90)" stroke-linecap="round"/>
+    <circle r="78" fill="none" stroke="#a855f7" stroke-width="20" stroke-dasharray="110 380" stroke-dashoffset="-270" transform="rotate(-90)" stroke-linecap="round"/>
+    <circle r="78" fill="none" stroke="#f97316" stroke-width="20" stroke-dasharray="60 430" stroke-dashoffset="-380" transform="rotate(-90)" stroke-linecap="round"/>
+  </g>
+
+  <!-- MONET wordmark -->
+  <g transform="translate(70 58) scale(1.6)" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="64" fill="url(#mtq)" text-anchor="middle">
+    <text x="30" y="64">M</text>
+    <text x="148" y="64">N</text>
+    <text x="194" y="64">E</text>
+    <text x="236" y="64">T</text>
+  </g>
+  <g transform="translate(70 58) scale(1.6)">
+    <circle cx="88" cy="40" r="26" fill="none" stroke="url(#mtq)" stroke-width="9"/>
+    <g stroke="#39a9b4" stroke-width="1" opacity="0.45">
+      <line x1="74" y1="22" x2="74" y2="58"/><line x1="88" y1="18" x2="88" y2="62"/><line x1="102" y1="22" x2="102" y2="58"/>
+      <line x1="68" y1="30" x2="108" y2="30"/><line x1="66" y1="40" x2="110" y2="40"/><line x1="68" y1="50" x2="108" y2="50"/>
+    </g>
+    <path d="M70 54 L80 47 L88 51 L101 30" fill="none" stroke="#d9482f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M93 29 L102 28 L101 37" fill="none" stroke="#d9482f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <path d="M108 218 H300 l9 -22 11 40 9 -30 7 12 H560" fill="none" stroke="#39b0bb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+
+  <text x="112" y="252" font-family="Arial, sans-serif" font-size="22" fill="#7fd0d0">Expense &amp; Subscription Tracker</text>
+
+  <!-- chips -->
+  <g font-family="Arial" font-size="15" font-weight="bold">
+    <rect x="112" y="266" width="120" height="28" rx="14" fill="#0d1a1a" stroke="#1a4040"/>
+    <text x="172" y="285" fill="#00f5e0" text-anchor="middle">React Native</text>
+    <rect x="240" y="266" width="64" height="28" rx="14" fill="#0d1a1a" stroke="#1a4040"/>
+    <text x="272" y="285" fill="#00f5e0" text-anchor="middle">Expo</text>
+    <rect x="312" y="266" width="92" height="28" rx="14" fill="#0d1a1a" stroke="#1a4040"/>
+    <text x="358" y="285" fill="#00f5e0" text-anchor="middle">Supabase</text>
+    <rect x="412" y="266" width="98" height="28" rx="14" fill="#0d1a1a" stroke="#1a4040"/>
+    <text x="461" y="285" fill="#00f5e0" text-anchor="middle">TypeScript</text>
+  </g>
+</svg>
